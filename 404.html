@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--© 2020 Hansong Zhang-->
+<html>
+    <head>
+        <title>File Not Found</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="icon" href="/assets/favicon.png">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+        <style>
+            :root {
+                --background-color: #202125;
+                --content-color: #52C7B8;
+            }
+
+            @media (prefers-color-scheme: light) {
+                :root {
+                    --background-color: #FFFFFF;
+                    --content-color: #009688;
+                }
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --background-color: #202125;
+                    --content-color: #52C7B8;
+                }
+            }
+
+            .body {
+                background-color: var(--background-color);
+                padding: 1%;
+            }
+
+            .typed {
+                font-family: "Fira Code", monospace;
+                font-size: 125%;
+                color: var(--content-color);
+                text-shadow: 0px 0px 16px var(--content-color);
+            }
+        </style>
+    </head>
+    
+    <body class="body">
+        <div id="typed-strings">
+            <p>YUKI.N> If you are reading this,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then you're probably accessing a non-existent file.<br><br>
+                
+               YUKI.N> This is a emergency escape program.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Press enter to activate it.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Otherwise close this tab.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If you activate it,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;you will be given time to repair space-time continuum.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;But there's no guarantee of success.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;There's also no guarantee of your safe return.<br><br>
+    
+               YUKI.N> This program can be started only once.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Once execute it will be erased.<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;It will also be erased if you choose not to activate it.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ready?<br>
+            </p>
+        </div>
+        <span id="typed" class="typed"></span>
+        
+        <script>
+            var typed = new Typed("#typed", {
+                stringsElement: "#typed-strings",
+                typeSpeed: 10,
+                startDelay: 1000,
+                showCursor: false,
+                onComplete: (self) => {
+                    document.onkeydown = function(event) {
+                        var e = event || window.event || arguments.callee.caller.arguments[0];
+                        if (e && e.keyCode == 13) {
+                            window.location = "https://blog.zhs.moe";
+                        }
+                    }
+                }
+            });
+
+
+            $("body").on("DOMSubtreeModified", "span", function () {
+                var currentTyped = $(this).html();
+                if (currentTyped.substring(currentTyped.length - 1) == " " || currentTyped.substring(currentTyped.length - 4) == "<br>")
+                window.scroll({ top: document.body.clientHeight, behavior: "smooth" });
+            });
+        </script>
+    </body>
+</html>

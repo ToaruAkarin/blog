@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Akarin&#39;s Story</title>
+  
+  <subtitle>The Journey of Akarin.</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://blog.zhs.moe/"/>
+  <updated>2021-02-19T12:33:56.242Z</updated>
+  <id>https://blog.zhs.moe/</id>
+  
+  <author>
+    <name>某阿卡林</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用 Adobe Premiere Pro 进行视频帧插补</title>
+    <link href="https://blog.zhs.moe/articles/pr-frame-interpolation/"/>
+    <id>https://blog.zhs.moe/articles/pr-frame-interpolation/</id>
+    <published>2020-02-16T16:00:00.000Z</published>
+    <updated>2021-02-19T12:33:56.242Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><h3 id="所需工具"><a href="#所需工具" class="headerlink" title="所需工具"></a>所需工具</h3><ul><li>Adobe Premiere Pro</li><li>Twixtor Pro</li></ul><h3 id="对-Matroska-格式的素材进行拆轨"><a href="#对-Matroska-格式的素材进行拆轨" class="headerlink" title="对 Matroska 格式的素材进行拆轨"></a>对 Matroska 格式的素材进行拆轨</h3><p>一来就踩了个坑，导入不了素材。</p><p>搜索后得知，Premiere Pro 不接受 Matroska 格式的素材，我们需要先将其中的音视频轨道拆出来。这里我使用 FFmpeg 进行拆分：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 分离视频轨道</span></span><br><span class="line">ffmpeg -i &lt;输入文件&gt;.mkv -vcodec copy -an &lt;输出文件&gt;.mp4</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 分离音频轨道</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 请根据视频音轨的编码修改输出文件的格式</span></span><br><span class="line">ffmpeg -i &lt;输入文件&gt;.mkv -acodec copy -vn &lt;输出文件&gt;.m4a</span><br></pre></td></tr></table></figure><p>得到的文件就能导入了。</p><h2 id="补帧"><a href="#补帧" class="headerlink" title="补帧"></a>补帧</h2><p>常见的补帧方法有光流法和 Twixtor 补帧。由于光流法效果略差，我这里使用后者。</p><p>首先当然是打开 Pr 新建项目，然后将素材拖入轨道并修改序列设置：</p><p><img src="1.png" alt></p><p>之后，通过键盘方向键导航，观察画面变化间隔的帧数。</p><p>右键序列中刚导入的素材，点击 「<strong>取消链接</strong>」 并删除音频轨道。然后选择右键菜单中的 「<strong>速度/持续时间…</strong>」，将速度改为 250%（假设画面 2-3 帧变化一次），这将起到消除重复帧的作用。由于速度变为了原来的 2.5 倍，需要将原素材选中，复制粘贴两次，起占位作用。</p><p>此时，轨道应该是这个样子的：</p><p><img src="2.png" alt></p><p>然后选中刚刚复制的这些轨道，右键，点击 「<strong>嵌套…</strong>」。添加嵌套之后不要切换到嵌套序列，直接将 「<strong>效果</strong>」 窗口中的 「<strong>Twixtor Pro</strong>」 拖至视频轨道上。</p><p>之后对其进行以下设置：</p><ul><li>在 「<strong>Output Control</strong>」 中将速度调整为 40%（取决于上文调整的速度，上文加的速这里降回来）</li><li>将 「<strong>GPU Settings</strong>」 里的 「<strong>Use GPU</strong>」 勾选（显卡加速）</li><li>把 「<strong>Output Control</strong>」 中的 「<strong>Warping</strong>」 设置为 「<strong>Forward</strong>」（降低重影）</li><li>（可选）调整 「<strong>Main_BG Layer Settings</strong>」 中的 「<strong>Main_BG Sensitive</strong>」（值越大画面越滑，但果冻效应也会更强）</li></ul><p>如图：</p><p><img src="3.png" alt></p><p>然后将音频轨道加回来，并删除视频多出来的部分（如果有）。</p><p>之后按下回车键渲染一下。喝杯茶之后回来看看效果，没问题的话就可以导出了。</p><h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><ul><li><a href="https://www.bilibili.com/video/av89707319" target="_blank" rel="external nofollow noopener noreferrer">戳这里</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;准备&quot;&gt;&lt;a href=&quot;#准备&quot; class=&quot;headerlink&quot; title=&quot;准备&quot;&gt;&lt;/a&gt;准备&lt;/h2&gt;&lt;h3 id=&quot;所需工具&quot;&gt;&lt;a href=&quot;#所需工具&quot; class=&quot;headerlink&quot; title=&quot;所需工具&quot;&gt;&lt;/a&gt;所需工具&lt;/h
+      
+    
+    </summary>
+    
+    
+      <category term="日常" scheme="https://blog.zhs.moe/categories/%E6%97%A5%E5%B8%B8/"/>
+    
+    
+      <category term="Adobe" scheme="https://blog.zhs.moe/tags/Adobe/"/>
+    
+      <category term="补帧" scheme="https://blog.zhs.moe/tags/%E8%A1%A5%E5%B8%A7/"/>
+    
+  </entry>
+  
+</feed>
